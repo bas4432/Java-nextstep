@@ -21,7 +21,7 @@ public class HelloWorldHandler extends Thread{
         log.debug("New Client Connect! Connected IP : {}, Port : {}", connection.getInetAddress(), connection.getPort());
 
         try(InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
-            log.debug("asdasdasd");
+
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 
             String requestLine = bufferedReader.readLine();
@@ -30,7 +30,7 @@ public class HelloWorldHandler extends Thread{
             if(!Optional.ofNullable(requestLine).isPresent()){
                 return;
             }
-            log.debug("asdasdasd112");
+
             while (!requestLine.isEmpty()){
                 requestLine = bufferedReader.readLine();
                 log.debug("Request Header : {}", requestLine);
@@ -47,7 +47,7 @@ public class HelloWorldHandler extends Thread{
 
     //header
     private void response200Header(DataOutputStream dos, int lengthOfBodyContent){
-        log.debug("asdasdasd33");
+
         try{
             dos.writeBytes("HTTP/1.1 200 OK \r\n");
             dos.writeBytes("Content-Type: text/html;charset=utf-8 \r\n");

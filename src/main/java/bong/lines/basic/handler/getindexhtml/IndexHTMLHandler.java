@@ -19,7 +19,6 @@ public class IndexHTMLHandler extends Thread{
 
     @Override
     public void run() {
-        log.debug("222222222222222");
         log.debug("New Client Connect! Connected IP : {}, Port : {}, Host Address : {}", connection.getInetAddress(), connection.getPort(), connection.getInetAddress().getHostAddress());
 
         try(InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
@@ -52,7 +51,7 @@ public class IndexHTMLHandler extends Thread{
     }
 
     private void response200Header(DataOutputStream dos, int lengthOfBodyContent){
-        log.debug("asdasdasd33333333");
+
         try{
             dos.writeBytes("HTTP/1.1 200 OK \r\n");
             dos.writeBytes("Content-Type: text/html;charset=utf-8 \r\n");
@@ -64,7 +63,7 @@ public class IndexHTMLHandler extends Thread{
     }
 
     private void responseBody(DataOutputStream dos, byte[] body){
-        log.debug("asdasdasd44444444444");
+
         try{
             dos.write(body, 0, body.length);
             dos.writeBytes("\r\n");

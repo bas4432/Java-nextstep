@@ -25,14 +25,11 @@ public class LoginHandler extends Thread {
     @Override
     public void run() {
         log.debug("New Client Connect! Connected IP : {}, Port : {}, Host Address : {}", connection.getInetAddress(), connection.getPort(), connection.getInetAddress().getHostAddress());
-        log.debug("asdasdasd1");
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
 
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
 
             String line = " ";
-
-
 
             byte[] body = null;
 
@@ -77,7 +74,6 @@ public class LoginHandler extends Thread {
 
                     System.out.println("requsetBody = " + requsetBody);
 
-
                     Map<String, String> values = new HashMap<String ,String>();
 
                     for(String param : requsetBody.split("&")){
@@ -91,12 +87,6 @@ public class LoginHandler extends Thread {
                     }
 
                     LoginUserDTO loginUserDTO = new LoginUserDTO(values.get("name"), values.get("email"),values.get("id"), values.get("password"));
-
-                    System.out.println("최종dto::" + loginUserDTO.getName()+ loginUserDTO.getEmail() + loginUserDTO.getId() + loginUserDTO.getPassword());
-
-
-
-
 
                     body = loginUserDTO.getName().getBytes();
                     //body = "hello world".getBytes();
@@ -119,7 +109,6 @@ public class LoginHandler extends Thread {
 
     private void response200Header(DataOutputStream dos, int lengthOfBodyContent) {
 
-        log.debug("asdasdasd22");
         try {
             dos.writeBytes("HTTP/1.1 200 OK \r\n");
             dos.writeBytes("Content-Type: text/html;charset=utf-8 \r\n");
@@ -132,7 +121,6 @@ public class LoginHandler extends Thread {
 
     private void responseBody(DataOutputStream dos, byte[] body) {
 
-        log.debug("asdasdasd333");
         try {
             dos.write(body, 0, body.length);
             dos.writeBytes("\r\n");
