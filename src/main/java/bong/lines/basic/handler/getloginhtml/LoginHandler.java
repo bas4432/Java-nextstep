@@ -111,6 +111,69 @@ public class LoginHandler extends Thread {
                     System.out.println(" ==================================== ");
                 }
 
+                if(line != null && line.contains("GET") && line.contains("/user/create")){
+
+                    log.debug("-----------------");
+
+                    Map<String, String> headers = new HashMap<>();
+                    try {
+                        String str = "";
+                        while ((str = bufferedReader.readLine()).length() > 0) {
+                            System.out.println("111111 => " + str);
+                            String[] headerTokens = str.split(": ");
+                            System.out.println("headerToken[0]-->>" + headerTokens[0]);
+                            System.out.println("headerToken[1]-->>" + headerTokens[1]);
+
+                            if (headerTokens.length == 2) {
+                                headers.put(headerTokens[0], headerTokens[1]);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    String[] splited = line.split(" ");
+                    String path = splited[1];
+
+                    int index = path.indexOf("?");
+                    log.debug("index::" + index);
+
+                    String realpath = path.substring(index + 1);
+
+                    log.debug("realPath:::" + realpath);
+
+                    Map<String, String> values = new HashMap<String ,String>();
+
+                    for(String param : realpath.split("&")){
+                        String pair[] = param.split("=");
+
+                        if(pair.length>1){
+                            values.put(pair[0], pair[1]);
+                        }else{
+                            values.put(pair[0], "");
+                        }
+                    }
+
+                    LoginUserDTO loginUserDTO = new LoginUserDTO(values.get("name"), values.get("email"),values.get("id"), values.get("password"));
+                    System.out.println("asdjakldjaklda::" + loginUserDTO.getName());
+                    Map<String, String> Json = new HashMap<String ,String>();
+
+                    Json.put("name", loginUserDTO.getName());
+                    Json.put("email", loginUserDTO.getEmail());
+                    Json.put("id", loginUserDTO.getId());
+                    Json.put("password", loginUserDTO.getPassword());
+
+                    System.out.println();
+
+                    String JSONresult = "\"{"+"\"name\": \"" + Json.get("name") + "\","+ "\"email\": \"" + Json.get("email") + "\""+","+"\"id\":\"" +Json.get("id") +"\""+","+"\"password\":\""+Json.get("password")+"\""+"}\"";
+
+
+
+                    body = JSONresult.getBytes();
+                }
+
+
+
 
 
             } while (body == null);
