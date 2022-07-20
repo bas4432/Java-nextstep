@@ -46,6 +46,7 @@ public class LoginHandler extends Thread {
                             .readAllBytes();
                 }
 
+
                 if (line != null && line.contains("POST") && line.contains("/user/create")) {
                     System.out.println(" ==================================== ");
 
@@ -87,8 +88,24 @@ public class LoginHandler extends Thread {
                     }
 
                     LoginUserDTO loginUserDTO = new LoginUserDTO(values.get("name"), values.get("email"),values.get("id"), values.get("password"));
+                    System.out.println("asdjakldjaklda::" + loginUserDTO.getName());
+                    Map<String, String> Json = new HashMap<String ,String>();
 
-                    body = loginUserDTO.getName().getBytes();
+                    Json.put("name", loginUserDTO.getName());
+                    Json.put("email", loginUserDTO.getEmail());
+                    Json.put("id", loginUserDTO.getId());
+                    Json.put("password", loginUserDTO.getPassword());
+
+                    System.out.println();
+
+                    String JSONresult = "\"{"+"\"name\": \"" + Json.get("name") + "\","+ "\"email\": \"" + Json.get("email") + "\""+","+"\"id\":\"" +Json.get("id") +"\""+","+"\"password\":\""+Json.get("password")+"\""+"}\"";
+
+
+
+                    body = JSONresult.getBytes();
+
+
+
                     //body = "hello world".getBytes();
 
                     System.out.println(" ==================================== ");
