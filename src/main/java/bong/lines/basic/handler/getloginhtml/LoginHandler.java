@@ -3,6 +3,7 @@ package bong.lines.basic.handler.getloginhtml;
 import bong.lines.basic.handler.Model.LoginUserDTO;
 import bong.lines.basic.handler.getindexhtml.IndexHTMLHandler;
 import bong.lines.basic.utill.IOUtils;
+import bong.lines.basic.utill.RequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,34 +76,36 @@ public class LoginHandler extends Thread {
 
                     System.out.println("requsetBody = " + requsetBody);
 
-                    Map<String, String> values = new HashMap<String ,String>();
+                    String result = RequestUtil.RequestBody(requsetBody);
+//
+//                    Map<String, String> values = new HashMap<String ,String>();
+//
+//                    for(String param : requsetBody.split("&")){
+//                        String pair[] = param.split("=");
+//
+//                        if(pair.length>1){
+//                            values.put(pair[0], pair[1]);
+//                        }else{
+//                            values.put(pair[0], "");
+//                        }
+//                    }
+//
+//                    LoginUserDTO loginUserDTO = new LoginUserDTO(values.get("name"), values.get("email"),values.get("id"), values.get("password"));
+//                    System.out.println("asdjakldjaklda::" + loginUserDTO.getName());
+//                    Map<String, String> Json = new HashMap<String ,String>();
+//
+//                    Json.put("name", loginUserDTO.getName());
+//                    Json.put("email", loginUserDTO.getEmail());
+//                    Json.put("id", loginUserDTO.getId());
+//                    Json.put("password", loginUserDTO.getPassword());
+//
+//                    System.out.println();
+//
+//                    String JSONresult = "\"{"+"\"name\": \"" + Json.get("name") + "\","+ "\"email\": \"" + Json.get("email") + "\""+","+"\"id\":\"" +Json.get("id") +"\""+","+"\"password\":\""+Json.get("password")+"\""+"}\"";
 
-                    for(String param : requsetBody.split("&")){
-                        String pair[] = param.split("=");
-
-                        if(pair.length>1){
-                            values.put(pair[0], pair[1]);
-                        }else{
-                            values.put(pair[0], "");
-                        }
-                    }
-
-                    LoginUserDTO loginUserDTO = new LoginUserDTO(values.get("name"), values.get("email"),values.get("id"), values.get("password"));
-                    System.out.println("asdjakldjaklda::" + loginUserDTO.getName());
-                    Map<String, String> Json = new HashMap<String ,String>();
-
-                    Json.put("name", loginUserDTO.getName());
-                    Json.put("email", loginUserDTO.getEmail());
-                    Json.put("id", loginUserDTO.getId());
-                    Json.put("password", loginUserDTO.getPassword());
-
-                    System.out.println();
-
-                    String JSONresult = "\"{"+"\"name\": \"" + Json.get("name") + "\","+ "\"email\": \"" + Json.get("email") + "\""+","+"\"id\":\"" +Json.get("id") +"\""+","+"\"password\":\""+Json.get("password")+"\""+"}\"";
 
 
-
-                    body = JSONresult.getBytes();
+                    body = result.getBytes();
 
 
 
@@ -115,22 +118,22 @@ public class LoginHandler extends Thread {
 
                     log.debug("-----------------");
 
-                    Map<String, String> headers = new HashMap<>();
-                    try {
-                        String str = "";
-                        while ((str = bufferedReader.readLine()).length() > 0) {
-                            System.out.println("111111 => " + str);
-                            String[] headerTokens = str.split(": ");
-                            System.out.println("headerToken[0]-->>" + headerTokens[0]);
-                            System.out.println("headerToken[1]-->>" + headerTokens[1]);
-
-                            if (headerTokens.length == 2) {
-                                headers.put(headerTokens[0], headerTokens[1]);
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+//                    Map<String, String> headers = new HashMap<>();
+//                    try {
+//                        String str = "";
+//                        while ((str = bufferedReader.readLine()).length() > 0) {
+//                            System.out.println("111111 => " + str);
+//                            String[] headerTokens = str.split(": ");
+//                            System.out.println("headerToken[0]-->>" + headerTokens[0]);
+//                            System.out.println("headerToken[1]-->>" + headerTokens[1]);
+//
+//                            if (headerTokens.length == 2) {
+//                                headers.put(headerTokens[0], headerTokens[1]);
+//                            }
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
 
                     String[] splited = line.split(" ");
                     String path = splited[1];
@@ -142,34 +145,36 @@ public class LoginHandler extends Thread {
 
                     log.debug("realPath:::" + realpath);
 
-                    Map<String, String> values = new HashMap<String ,String>();
+                    String result = RequestUtil.RequestBody(realpath);
 
-                    for(String param : realpath.split("&")){
-                        String pair[] = param.split("=");
+//                    Map<String, String> values = new HashMap<String ,String>();
+//
+//                    for(String param : realpath.split("&")){
+//                        String pair[] = param.split("=");
+//
+//                        if(pair.length>1){
+//                            values.put(pair[0], pair[1]);
+//                        }else{
+//                            values.put(pair[0], "");
+//                        }
+//                    }
+//
+//                    LoginUserDTO loginUserDTO = new LoginUserDTO(values.get("name"), values.get("email"),values.get("id"), values.get("password"));
+//                    System.out.println("asdjakldjaklda::" + loginUserDTO.getName());
+//                    Map<String, String> Json = new HashMap<String ,String>();
+//
+//                    Json.put("name", loginUserDTO.getName());
+//                    Json.put("email", loginUserDTO.getEmail());
+//                    Json.put("id", loginUserDTO.getId());
+//                    Json.put("password", loginUserDTO.getPassword());
+//
+//                    System.out.println();
+//
+//                    String JSONresult = "\"{"+"\"name\": \"" + Json.get("name") + "\","+ "\"email\": \"" + Json.get("email") + "\""+","+"\"id\":\"" +Json.get("id") +"\""+","+"\"password\":\""+Json.get("password")+"\""+"}\"";
+//
 
-                        if(pair.length>1){
-                            values.put(pair[0], pair[1]);
-                        }else{
-                            values.put(pair[0], "");
-                        }
-                    }
 
-                    LoginUserDTO loginUserDTO = new LoginUserDTO(values.get("name"), values.get("email"),values.get("id"), values.get("password"));
-                    System.out.println("asdjakldjaklda::" + loginUserDTO.getName());
-                    Map<String, String> Json = new HashMap<String ,String>();
-
-                    Json.put("name", loginUserDTO.getName());
-                    Json.put("email", loginUserDTO.getEmail());
-                    Json.put("id", loginUserDTO.getId());
-                    Json.put("password", loginUserDTO.getPassword());
-
-                    System.out.println();
-
-                    String JSONresult = "\"{"+"\"name\": \"" + Json.get("name") + "\","+ "\"email\": \"" + Json.get("email") + "\""+","+"\"id\":\"" +Json.get("id") +"\""+","+"\"password\":\""+Json.get("password")+"\""+"}\"";
-
-
-
-                    body = JSONresult.getBytes();
+                    body = result.getBytes();
                 }
 
 
