@@ -37,7 +37,12 @@ public class LoginHandler extends Thread {
             do {
                 line = bufferedReader.readLine();
 
+                if(line == null){
+                    return;
+                }
+
                 if (line != null && line.contains("GET") && line.contains("loginform.do")) {
+                    log.debug("loginform.doLine-------->" + line);
                     String screenName = line.split(" ")[1]
                             .replace("/", "")
                             .replace(".do", "");
@@ -49,18 +54,19 @@ public class LoginHandler extends Thread {
 
 
                 if (line != null && line.contains("POST") && line.contains("/user/create")) {
-                    System.out.println(" ==================================== ");
+                    log.debug("==================================");
 
-                    log.debug("------>" + line);
-                    log.debug("<======" + bufferedReader.readLine());
+                    log.debug("PostLin------------->" + line);
+                    log.debug("bufferedReader.readLine() ---------------->" +bufferedReader.readLine());
+
                     Map<String, String> headers = new HashMap<>();
                     try {
                         String str = "";
                         while ((str = bufferedReader.readLine()).length() > 0) {
-                            System.out.println("111111 => " + str);
+                            System.out.println("str ------------->> " + str);
                             String[] headerTokens = str.split(": ");
-                            System.out.println("headerToken[0]-->>" + headerTokens[0]);
-                            System.out.println("headerToken[1]-->>" + headerTokens[1]);
+                            System.out.println("headerToken[0]------>" + headerTokens[0]);
+                            System.out.println("headerToken[1]------>" + headerTokens[1]);
 
                             if (headerTokens.length == 2) {
                                 headers.put(headerTokens[0], headerTokens[1]);
@@ -70,116 +76,41 @@ public class LoginHandler extends Thread {
                         e.printStackTrace();
                     }
 
-                    System.out.println("content-legnth:::" + headers.get("Content-Length"));
+                    log.debug("content-length--------------->" + headers.get("Content-Length"));
 
-                    String requsetBody = IOUtils.readData(bufferedReader, Integer.parseInt(headers.get("Content-Length")));
+                    String requestBody = IOUtils.readData(bufferedReader, Integer.parseInt(headers.get("Content-Length")));
 
-                    System.out.println("requsetBody = " + requsetBody);
+                    log.debug("requsetBody-----------> " + requestBody);
 
-                    String result = RequestUtil.RequestBody(requsetBody);
-//
-//                    Map<String, String> values = new HashMap<String ,String>();
-//
-//                    for(String param : requsetBody.split("&")){
-//                        String pair[] = param.split("=");
-//
-//                        if(pair.length>1){
-//                            values.put(pair[0], pair[1]);
-//                        }else{
-//                            values.put(pair[0], "");
-//                        }
-//                    }
-//
-//                    LoginUserDTO loginUserDTO = new LoginUserDTO(values.get("name"), values.get("email"),values.get("id"), values.get("password"));
-//                    System.out.println("asdjakldjaklda::" + loginUserDTO.getName());
-//                    Map<String, String> Json = new HashMap<String ,String>();
-//
-//                    Json.put("name", loginUserDTO.getName());
-//                    Json.put("email", loginUserDTO.getEmail());
-//                    Json.put("id", loginUserDTO.getId());
-//                    Json.put("password", loginUserDTO.getPassword());
-//
-//                    System.out.println();
-//
-//                    String JSONresult = "\"{"+"\"name\": \"" + Json.get("name") + "\","+ "\"email\": \"" + Json.get("email") + "\""+","+"\"id\":\"" +Json.get("id") +"\""+","+"\"password\":\""+Json.get("password")+"\""+"}\"";
-
-
+                    String result = RequestUtil.RequestBody(requestBody);
 
                     body = result.getBytes();
 
-
-
-                    //body = "hello world".getBytes();
-
-                    System.out.println(" ==================================== ");
+                    log.debug(" ==================================== ");
                 }
 
                 if(line != null && line.contains("GET") && line.contains("/user/create")){
 
-                    log.debug("-----------------");
-
-//                    Map<String, String> headers = new HashMap<>();
-//                    try {
-//                        String str = "";
-//                        while ((str = bufferedReader.readLine()).length() > 0) {
-//                            System.out.println("111111 => " + str);
-//                            String[] headerTokens = str.split(": ");
-//                            System.out.println("headerToken[0]-->>" + headerTokens[0]);
-//                            System.out.println("headerToken[1]-->>" + headerTokens[1]);
-//
-//                            if (headerTokens.length == 2) {
-//                                headers.put(headerTokens[0], headerTokens[1]);
-//                            }
-//                        }
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
+                    log.debug("GETLine-------------------->" + line);
 
                     String[] splited = line.split(" ");
+
+                    log.debug("splited----------->" + splited[1]);
+
                     String path = splited[1];
 
-                    int index = path.indexOf("?");
-                    log.debug("index::" + index);
+                    int index = path.indexOf("?"); //?까지 인덱스값
 
-                    String realpath = path.substring(index + 1);
+                    log.debug("index------------->" + index);
 
-                    log.debug("realPath:::" + realpath);
+                    String realpath = path.substring(index + 1); //?(13) 물음표 뒤에 호출
+
+                    log.debug("realPath---------->" + realpath);
 
                     String result = RequestUtil.RequestBody(realpath);
 
-//                    Map<String, String> values = new HashMap<String ,String>();
-//
-//                    for(String param : realpath.split("&")){
-//                        String pair[] = param.split("=");
-//
-//                        if(pair.length>1){
-//                            values.put(pair[0], pair[1]);
-//                        }else{
-//                            values.put(pair[0], "");
-//                        }
-//                    }
-//
-//                    LoginUserDTO loginUserDTO = new LoginUserDTO(values.get("name"), values.get("email"),values.get("id"), values.get("password"));
-//                    System.out.println("asdjakldjaklda::" + loginUserDTO.getName());
-//                    Map<String, String> Json = new HashMap<String ,String>();
-//
-//                    Json.put("name", loginUserDTO.getName());
-//                    Json.put("email", loginUserDTO.getEmail());
-//                    Json.put("id", loginUserDTO.getId());
-//                    Json.put("password", loginUserDTO.getPassword());
-//
-//                    System.out.println();
-//
-//                    String JSONresult = "\"{"+"\"name\": \"" + Json.get("name") + "\","+ "\"email\": \"" + Json.get("email") + "\""+","+"\"id\":\"" +Json.get("id") +"\""+","+"\"password\":\""+Json.get("password")+"\""+"}\"";
-//
-
-
                     body = result.getBytes();
                 }
-
-
-
-
 
             } while (body == null);
 
