@@ -99,11 +99,11 @@ public class LoginHandler extends Thread {
 
                     String path = splited[1];
 
-                    int index = path.indexOf("?"); //?까지 인덱스값
+                    int index = path.indexOf("?");
 
                     log.debug("index------------->" + index);
 
-                    String realpath = path.substring(index + 1); //?(13) 물음표 뒤에 호출
+                    String realpath = path.substring(index + 1);
 
                     log.debug("realPath---------->" + realpath);
 
