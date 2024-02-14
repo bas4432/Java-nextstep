@@ -34,6 +34,7 @@ public class HelloWorldHandler extends Thread{
             while (!requestLine.isEmpty()){
                 requestLine = bufferedReader.readLine();
                 log.debug("Request Header : {}", requestLine);
+                log.debug("Request Header111111 : {}", requestLine);
             }
 
             DataOutputStream dos = new DataOutputStream(out);
